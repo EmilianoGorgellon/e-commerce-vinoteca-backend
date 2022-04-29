@@ -4,21 +4,22 @@ class Productos {
         try {
             return await productoModel.find({})
         } catch (error) {
-            console.log("error");
+            throw new Error("Error en obtener producto")
         }
     }
     async getProductByName(name) {
         try {
             return await productoModel.find({"name": name})
         } catch (error) {
-            console.log(error);
+            throw new Error("Error en obtener producto por nombre")
+
         }
     }
     async saveProduct(body) {
         try {
             return await productoModel.create(body);
         } catch (error) {
-            console.log("error")
+            throw new Error("Error en guardar producto")
         }
     }
 
@@ -26,7 +27,7 @@ class Productos {
         try {
             return await productoModel.updateOne({_id: _id}, {"name":"hola"})
         } catch (error) {
-            console.log("error");
+            throw new Error("Error en actualizar producto")
         }
     }
     
@@ -34,7 +35,7 @@ class Productos {
         try {
             return await productoModel.deleteOne({_id: _id})
         } catch (error) {
-            console.log("error");
+            throw new Error("Error en eliminar producto")
         }
     }
 
@@ -42,7 +43,7 @@ class Productos {
         try {
             return await productoModel.deleteMany({})
         } catch (error) {
-            console.log("error");
+            throw new Error("Error en eliminar todos los productos")
         }
     }
 }

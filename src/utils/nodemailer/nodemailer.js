@@ -13,23 +13,24 @@ nodemailer.createTransport({
 });
 
 class Nodemailer {
-    async newUser (data){
+    async new_user_verification (data){
         try {
-            const subject = "Nuevo registro!";
+            console.log(" a putno de denviar email")
+            const subject = "Verificacion de Email";
             const html = 
                 `
-                    <h1>Informacion del usuario registrado</h1>
-                    <ul>
-                        <li>Nombre: ${data.name}</li>
-                        <li>Email: ${data.email}</li>
-                        <li>Edad: ${data.edad}</li>
-                        <li>Telefono: ${data.phone}</li>
-                        <img src="data:image/png;base64,${data.photo}" alt="perfil-img-user" />
-                    </ul>
+                    <form method="post" action="http://localhost:3000/api/carrito/" style="display: block; width: 100%;">
+                        <h1 style="text-align: center;">Hola ${data.name}, haga click en el siguiente enlace para confirmar su cuenta</h1>
+                        <div style="display: flex; justify-content: space-evenly; width: 80%;">
+                            <img style="width: 75px; object-fit: cover; border-radius: 50%;" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/wine-bar-logo-brand-logo-template-design-467de904bec2855b56d72d5f58c91407_screen.jpg?ts=1574430397" alt="logo vino" />
+                            <img style="width: 75px; object-fit: cover; border-radius: 50%;" src="${data.imageUrl}" alt="img-avatar" />
+                        </div>
+                        <button type="submit" style="padding: 10px 20px; text-align: center; border-radius: 6px; font-size: 24px; background-color: #0077F9;">Confirmar Email</button>
+                    </form>
                 `; 
-            const to = process.argv[4] || user;
+            const to = user;
             return await transport.sendMail({
-                from:"E-commerce de Emilano <ecommerceEmiliano@gmail.com>",
+                from:"E-commerce de Emilano <emilianogorgellon@gmail.com>",
                 to,
                 subject,
                 html
@@ -39,3 +40,5 @@ class Nodemailer {
         }
     }
 }
+
+module.exports = new Nodemailer();

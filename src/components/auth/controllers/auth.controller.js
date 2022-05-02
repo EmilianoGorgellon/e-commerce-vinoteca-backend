@@ -12,7 +12,7 @@ class Auth_controller {
         }
     }
 
-    async singUp (req, res) {
+    async register (req, res) {
         try {
             const data = {
                 body: req.body,
@@ -27,21 +27,4 @@ class Auth_controller {
         }
     }
 }
-// const signIn = async (req, res) => {
-//     const response = await auth.signInService(req.body);
-//     if (typeof(response) === "string") return res.status(200).json(response)
-//     return await res.status(401).json(response)
-// }
-
-// // // registrarse
-// const signUp = async (req, res) => {
-//     const data = {
-//         body: req.body,
-//         image: req.file
-//     }
-//     const response = await auth.signUpService(data);
-//     if (typeof(response) === "string") return res.status(200).json(response)
-//     return await res.status(401).json(response)
-// }
-
 module.exports = new Auth_controller();

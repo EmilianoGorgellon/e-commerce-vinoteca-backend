@@ -18,6 +18,7 @@ class Auth {
             if (!userFound) return new Error("Error en email");
             const matchPassword = await bcrypter.comparePassword(data.password, userFound[0].password);
             if (!matchPassword) return new Error("Error en contraseña"); 
+            console.log("GENERARIA TOKEN")
             return await JWT.generateToken({name: userFound[0].name, email: userFound[0].email, image: userFound[0].imageUrl, isAdmin: userFound[0].isAdmin})
         } catch (error) {
             return new Error("Error in system")
@@ -54,4 +55,4 @@ class Auth {
     }
 }
 
-module.exports = new Auth;
+module.exports = new Auth();

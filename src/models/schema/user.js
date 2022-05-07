@@ -6,8 +6,9 @@ const password = joi.string().min(3);
 const imageUrl = joi.string();
 const isAdmin = joi.boolean();
 const public_id = joi.string();
+const validateEmail = joi.boolean();
 const created_at = joi.date();
-// const validateEmail = joi.boolean();
+
 
 const usersSchema = new Schema ({
     name: name.required(),
@@ -15,8 +16,8 @@ const usersSchema = new Schema ({
     password: password.required(),
     imageUrl: imageUrl.required(),
     public_id: public_id.required(),
-    isAdmin: isAdmin.default(false),
-    // validateEmail: validateEmail.default(false),
+    isAdmin: isAdmin.default(false).required(),
+    validateEmail: validateEmail.default(false).required(),
     created_at: created_at
 });
 

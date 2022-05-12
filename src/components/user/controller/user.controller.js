@@ -20,10 +20,8 @@ class User_controller {
 
     async updateProfile (req, res) {
         try {
-            console.log("VEO UPDATE PROFILE");
-            await user.updateUser(req);
-            console.log("AHORA MANDO RESPUESTA DESDE CONTROLLER")
-            return res.json("xd")
+            const response = await user.updateUser(req);
+            return res.status(200).json({response})
         } catch (error) {
             console.log(error)
             return await res.status(500).json({"response": "Error en el servidor"})

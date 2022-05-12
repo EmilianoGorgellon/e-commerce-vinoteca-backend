@@ -25,7 +25,7 @@ class Nodemailer {
                             <img style="width: 75px; object-fit: cover; border-radius: 50%;" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/wine-bar-logo-brand-logo-template-design-467de904bec2855b56d72d5f58c91407_screen.jpg?ts=1574430397" alt="logo vino" />
                             <img style="width: 75px; object-fit: cover; border-radius: 50%; "src="${data.imageUrl}" alt="img-avatar" />
                         </div>
-                        <a href="http://localhost:4000/api/auth/user/${token}" style="padding: 10px 20px; text-align: center; border-radius: 6px; font-size: 24px; background-color: #0077F9;">Confirmar Email</a>
+                        <a href="http://localhost:4000/api/user/${token}" style="padding: 10px 20px; text-align: center; border-radius: 6px; font-size: 24px; background-color: #0077F9;">Confirmar Email</a>
                     </div>
                 `; 
             const to = data.email;

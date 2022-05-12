@@ -12,6 +12,14 @@ class Cloudinary {
             throw new Error("No se creo imagen: ", error)
         }
     }
+
+    async deleteImage (public_id) {
+        try {
+            await cloudinary_config.v2.uploader.destroy(public_id);
+        } catch (error) {
+            throw new Error("No se elimino la imagen: ", error)
+        }
+    }
 }
 
 module.exports = new Cloudinary();

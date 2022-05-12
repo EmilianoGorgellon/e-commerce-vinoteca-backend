@@ -6,5 +6,4 @@ module.exports = app => {
     
     router.post('/login', Auth_controller.login);
     router.post('/register', Auth_controller.register);
-    router.get("/user/:token", Auth_controller.verifyUser);
 }

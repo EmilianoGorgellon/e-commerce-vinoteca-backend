@@ -12,7 +12,7 @@ class JWT {
         }
     }
 
-    async verifyToken(req, res, next) {
+    async verifyTokenAdmin(req, res, next) {
         try {
             const token = req.headers.authorization.split(" ")[1];
             const decoded = jwt.verify(token, config.secret_jwt);

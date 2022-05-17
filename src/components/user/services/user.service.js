@@ -74,6 +74,15 @@ class User {
             throw new Error(`No se pudo actualizar el usuario: ${error}`)
         }
     }
+
+    async userToAdmin (email) {
+        try { 
+            const get_user = await this.getUserByEmail(email);
+            return await usersModel.updateOne({_id: get_user[0].id}, {isAdmin: true});
+        } catch (error) {
+            throw new Error(`No se pudo actualizar a administrador: ${error}`)
+        }
+    }
 }
 
 module.exports = new User();

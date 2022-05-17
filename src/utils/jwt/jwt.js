@@ -16,12 +16,12 @@ class JWT {
         try {
             const token = req.headers.authorization.split(" ")[1];
             const decoded = jwt.verify(token, config.secret_jwt);
-            const getUserByEmail = await usersModel.find({email: decoded.email})
+            const getUserByEmail = await usersModel.find({email: decoded.name.email})
             if (getUserByEmail.length === 0) return res.status(401).json(`Error: No usuario encontrado`);
-            if (!decoded.isAdmin) return res.json(`Usuario no tiene acceso a esta accion`);
+            if (!decoded.name.isAdmin) return res.json(`Usuario no tiene acceso a esta accion`);
             next();
         } catch (error) {
-            return res.json(`Token no autorizado`)
+            return res.status(500).json(`Token no autorizado`)
         }
     }
 

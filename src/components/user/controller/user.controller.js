@@ -23,8 +23,16 @@ class User_controller {
             const response = await user.updateUser(req);
             return res.status(200).json({response})
         } catch (error) {
-            console.log(error)
             return await res.status(500).json({"response": "Error en el servidor"})
+        }
+    }
+
+    async userToAdmin (req, res) {
+        try {
+            const response = await user.userToAdmin(req.body.email);
+            return res.status(200).json({response});
+        } catch (error) {
+            return await res.status(500).json({"response": `${error}`})
         }
     }
 }

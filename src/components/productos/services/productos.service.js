@@ -1,4 +1,6 @@
-let {productoModel} = require("../../../models/schema/productos")
+let {productoModel} = require("../../../models/schema/productos");
+const Cloudinary = require("../../../utils/cloudinary/cloudinary");
+const Nodemailer = require("../../../utils/nodemailer/nodemailer");
 class Productos {
     async getProducts() {
         try {
@@ -17,7 +19,9 @@ class Productos {
     }
     async saveProduct(body) {
         try {
-            return await productoModel.create(body);
+            console.log("En service de productos");
+            return ""
+            // return await productoModel.create(body);
         } catch (error) {
             throw new Error("Error en guardar producto")
         }

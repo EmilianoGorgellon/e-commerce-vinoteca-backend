@@ -28,9 +28,9 @@ class App {
             filename: (req, file, cb) => {
                 cb(null, new Date().getTime() + path.extname(file.originalname))
             }
-        })  
-        this.app.use(multer({storage}).single('image'));
-       
+        })
+        this.app.use(multer({storage}).array('images'));
+        // this.app.use(multer({storage}).single('image'));
     }
     async routes () {
         routesServer(this.app);

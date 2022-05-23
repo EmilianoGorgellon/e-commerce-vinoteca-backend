@@ -13,6 +13,22 @@ class Cloudinary {
         }
     }
 
+    async generateMultipleImages (images) {
+        try {
+            let imagesUrl = [];
+            let public_ids = [];
+            for(let image of images) {
+                const result_cloudinary = await cloudinary_config.v2.uploader.upload(image.path);
+                imagesUrl.push(result_cloudinary.secure_url);
+                public_ids.push(result_cloudinary.public_id);
+                await fs.unlink(image.path);
+            }
+            return [imagesUrl, public_ids];
+        } catch (error) {
+            throw new Error("No se creo imagen: ", error)
+        }
+    }
+
     async deleteImage (public_id) {
         try {
             await cloudinary_config.v2.uploader.destroy(public_id);

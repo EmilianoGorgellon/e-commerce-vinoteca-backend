@@ -34,8 +34,6 @@ class User {
         try {
             const data_user = await JWT.verifyTokenFromEmail(req.headers.authorization.split(" ")[1]);
             if (req.body.name === data_user.name && req.file === undefined) return new Error("Error no hay nada para actualizar");
-            console.log("Voy a chequera si actualizo nombre");
-            console.log(data_user)
             if (req.file === undefined && req.body.name !== data_user.name) return await usersModel.updateOne({_id: data_user._id}, {name: req.body.name})
             await Cloudinary.deleteImage(data_user.public_id);
             const result_cloudinary = await Cloudinary.generateImagen(req.file.path);

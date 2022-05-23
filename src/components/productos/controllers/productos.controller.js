@@ -21,10 +21,11 @@ class Producto_controller {
 
     async saveProductData (req, res) {
         try {
-            console.log("Subo producto y veo que tiene");
-            console.log(req.body);
-            console.log(req.file);
-            return await res.json(producto.saveProduct(req.body))
+            const data = {
+                body: req.body,
+                images: req.files
+            }
+            return await res.json(producto.saveProduct(data))
         } catch (error) {
             pino.error(`Error en guardar el producto: ${error}`);
             return res.status(500).json({"response": "Error en el servidor"})

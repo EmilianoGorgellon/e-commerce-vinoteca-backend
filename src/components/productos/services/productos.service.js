@@ -17,13 +17,26 @@ class Productos {
 
         }
     }
-    async saveProduct(body) {
+    async saveProduct(datas) {
         try {
-            console.log("En service de productos");
+            const {name, description, price, category, stock } = datas.body;
+            const result_cloudinary = await Cloudinary.generateMultipleImages(datas.images);
+            const new_product = {
+                name,
+                description,
+                price,
+                category,
+                stock,
+                imagesUrl: result_cloudinary[0],
+                publics_id: result_cloudinary[1],
+                created_at: new Date()
+            };
+            console.log(new_product);
+            // Subo producto pero falta rehacer nuevamente el schema
             return ""
             // return await productoModel.create(body);
         } catch (error) {
-            throw new Error("Error en guardar producto")
+            throw new Error("Error en guardar producto: ", error)
         }
     }
 

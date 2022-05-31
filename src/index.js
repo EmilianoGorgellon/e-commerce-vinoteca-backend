@@ -4,8 +4,6 @@ const numCPUs = require("os").cpus().length;
 const {config} = require("./config");
 const cors = require("cors");
 const {connection} = require("./config/mongodb");
-const multer = require("multer");
-const path = require("path");
 const routesServer = require("./routes");
 const pino = require("./utils/pino/pino");
 const isCluster = false;
@@ -23,14 +21,6 @@ class App {
     }
     async middlewares(){
         this.app.use(cors(config.cors));
-        const storage = multer.diskStorage({
-            destination: path.join(__dirname, "public/uploads"),
-            filename: (req, file, cb) => {
-                cb(null, new Date().getTime() + path.extname(file.originalname))
-            }
-        })
-        this.app.use(multer({storage}).array('images'));
-        // this.app.use(multer({storage}).single('image'));
     }
     async routes () {
         routesServer(this.app);

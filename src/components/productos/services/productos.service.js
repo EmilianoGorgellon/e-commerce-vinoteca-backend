@@ -29,7 +29,8 @@ class Productos {
                 stock,
                 imagesUrl: result_cloudinary[0],
                 publics_id: result_cloudinary[1],
-                created_at: new Date()
+                created_at: new Date(),
+                updated_at: new Date()
             };
             console.log(new_product);
             // Subo producto pero falta rehacer nuevamente el schema

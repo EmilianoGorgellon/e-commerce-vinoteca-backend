@@ -4,7 +4,7 @@ const Nodemailer = require("../../../utils/nodemailer/nodemailer");
 class Productos {
     async getProducts() {
         try {
-            return await productoModel.find({})
+            return await productoModel.find({});
         } catch (error) {
             throw new Error("Error en obtener producto")
         }
@@ -34,8 +34,7 @@ class Productos {
             };
             console.log(new_product);
             // Subo producto pero falta rehacer nuevamente el schema
-            return ""
-            // return await productoModel.create(body);
+            return await productoModel.create(new_product);
         } catch (error) {
             throw new Error("Error en guardar producto: ", error)
         }

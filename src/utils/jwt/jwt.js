@@ -15,12 +15,18 @@ class JWT {
     async verifyTokenAdmin(req, res, next) {
         try {
             const token = req.headers.authorization.split(" ")[1];
+            console.log("verifico token")
+            console.log(token)
             const decoded = jwt.verify(token, config.secret_jwt);
+            console.log(decoded)
             const getUserByEmail = await usersModel.find({email: decoded.name.email})
             if (getUserByEmail.length === 0) return res.status(401).json(`Error: No usuario encontrado`);
-            if (!decoded.name.isAdmin) return res.json(`Usuario no tiene acceso a esta accion`);
+            console.log("Encontro usuario")
+            if (!decoded.name.isAdmin) return res.status(401).json(`Usuario no tiene acceso a esta accion`);
+            console.log("Salio bien el token")
             next();
         } catch (error) {
+            console.log(error)
             return res.status(500).json(`Token no autorizado`)
         }
     }

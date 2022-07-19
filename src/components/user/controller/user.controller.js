@@ -35,6 +35,15 @@ class User_controller {
             return await res.status(500).json({"response": `${error}`})
         }
     }
+
+    async forgetPassword (req, res) {
+        try {
+            const response = await user.forgetPassword(req.body.email, req.body.code);
+            return res.status(201).json({"response": `${response}`});
+        } catch (error) {
+            return await res.status(500).json({"response": `${error}`})
+        }
+    }
 }
 
 module.exports = new User_controller();

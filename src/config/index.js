@@ -11,7 +11,9 @@ const config = {
     cloudinary_api_secret: `${process.env.CLOUDINARY_API_SECRET}`,
     salt_rounds_bcrypt: `${process.env.SALT_ROUNDS_BCRYPT}`,
     nodemailer_user: `${process.env.NODEMAILER_USER}`,
-    nodemailer_pw: `${process.env.NODEMAILER_PW}`
+    nodemailer_pw: `${process.env.NODEMAILER_PW}`,
+    public_key_mercadopago: `${process.env.PUBLIC_KEY_MERCADOPAGO}`,
+    access_token_mercadopago: `${process.env.ACCESS_TOKEN_MERCADOPAGO}`
 }
 
 module.exports = {config}

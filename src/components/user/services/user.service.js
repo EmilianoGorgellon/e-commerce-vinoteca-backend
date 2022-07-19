@@ -81,6 +81,22 @@ class User {
             throw new Error(`No se pudo actualizar a administrador: ${error}`)
         }
     }
+
+    async forgetPassword (email, code) {
+        try {
+            console.log(email)
+            const get_user = await this.getUserByEmail(email);
+            if (get_user.length === 0) throw new Error(`Error no se detecto usuario con ese email`);
+            // Aca mandaria email para configurarle la contraseña
+            console.log("Encontro user:")
+            console.log(get_user)
+            const send_email = await Nodemailer.email_forget_password(email, code);
+            console.log(send_email)
+            return get_user;
+        } catch (error) {
+            throw new Error(`Error: ${error}`)
+        }
+    }
 }
 
 module.exports = new User();

@@ -5,7 +5,7 @@ class bcrypter {
         try {
             return await bcrypt.compare(password, password_db);
         } catch (error) {
-            return `response: error en catch copmare password`
+            throw new Error (`Error en catch compare password: ${error}`);
         }
     }
 
@@ -13,7 +13,7 @@ class bcrypter {
         try {
             return await bcrypt.hash(password, config.salt_rounds_bcrypt);
         } catch (error) {
-            return `response: Error`
+            throw new Error (`Error en la encriptacion de contraseña: ${error}`);
         }
     }
 }

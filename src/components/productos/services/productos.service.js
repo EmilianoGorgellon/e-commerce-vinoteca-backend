@@ -1,20 +1,18 @@
 let {productoModel} = require("../../../models/schema/productos");
 const Cloudinary = require("../../../utils/cloudinary/cloudinary");
-const Nodemailer = require("../../../utils/nodemailer/nodemailer");
 class Productos {
     async getProducts() {
         try {
             return await productoModel.find({});
         } catch (error) {
-            throw new Error("Error en obtener producto")
+            throw new Error(`Error en obtener productos: ${error}`)
         }
     }
     async getProductByName(name) {
         try {
             return await productoModel.find({"name": name})
         } catch (error) {
-            throw new Error("Error en obtener producto por nombre")
-
+            throw new Error(`Erro en obtener producto por nombre: ${error}`);
         }
     }
     async saveProduct(datas) {
@@ -32,19 +30,17 @@ class Productos {
                 created_at: new Date(),
                 updated_at: new Date()
             };
-            console.log(new_product);
-            // Subo producto pero falta rehacer nuevamente el schema
             return await productoModel.create(new_product);
         } catch (error) {
-            throw new Error("Error en guardar producto: ", error)
+            throw new Error(`Error en guardar producto: ${error}`);
         }
     }
 
     async updateProduct(_id) {
         try {
-            return await productoModel.updateOne({_id: _id}, {"name":"hola"})
+            return await productoModel.updateOne({_id: _id}, {"name":"hola"});
         } catch (error) {
-            throw new Error("Error en actualizar producto")
+            throw new Error(`Error en actualizar producto: ${error}`);
         }
     }
     
@@ -52,7 +48,7 @@ class Productos {
         try {
             return await productoModel.deleteOne({_id: _id})
         } catch (error) {
-            throw new Error("Error en eliminar producto")
+            throw new Error(`Error en eliminar producto por id`)
         }
     }
 
@@ -60,7 +56,7 @@ class Productos {
         try {
             return await productoModel.deleteMany({})
         } catch (error) {
-            throw new Error("Error en eliminar todos los productos")
+            throw new Error(`Error en eliminar todos los productos: ${error}`)
         }
     }
 }

@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
+const pino = require("../utils/pino/pino");
 const {config} = require("./index");
 
 let connection;
 (async () => {
     try {
-        connection = mongoose.connect(config.mongo_atlas_uri, {useNewUrlParser:true, useUnifiedTopology: true})
-        console.log("DB is connected");
+        connection = mongoose.connect(config.mongo_atlas_uri, {useNewUrlParser:true, useUnifiedTopology: true});
+        pino.info("DB connected successfully");
     } catch (error) {
-        console.log(error)
+        pino.error("DB failed in the connection");
     }
 })()
 

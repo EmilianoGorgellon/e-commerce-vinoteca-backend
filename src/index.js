@@ -37,7 +37,7 @@ class App {
                 })
             }else{
                 this.app.listen(this.port, err=>{
-                    pino.info(`Con Cluster: Server on http://localhost:${this.port}`)
+                    pino.info(`Con Cluster: Server on http://localhost:${this.port}`);
                 })
             }
         } else {

@@ -27,10 +27,10 @@ class Productos {
                 stock,
                 imagesUrl: result_cloudinary[0],
                 publics_id: result_cloudinary[1],
-                created_at: new Date(),
                 updated_at: new Date()
             };
-            return await productoModel.create(new_product);
+            await productoModel.create(new_product);
+            return {response: `Se creo satisfactoriamente un producto nuevo`, code: 200}
         } catch (error) {
             throw new Error(`Error en guardar producto: ${error}`);
         }

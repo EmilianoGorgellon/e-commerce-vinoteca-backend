@@ -8,7 +8,6 @@ const stock = joi.number();
 const imagesUrl = joi.array();
 const publics_id = joi.array();
 const updated_at = joi.date();
-const created_at = joi.date();
 let productosSchema = new Schema ({
     name: name.required(),
     description: description.required(),
@@ -17,9 +16,11 @@ let productosSchema = new Schema ({
     stock: stock.required(),
     imagesUrl: imagesUrl.required(),
     publics_id: publics_id.required(),
-    updated_at: updated_at.required(),
-    created_at: created_at.required()
-})
+    updated_at: updated_at.required()
+    }, {
+        timestamps: true,
+        versionKey: false
+    })
 const productoModel = new model("productos", productosSchema);
 
 module.exports = {productoModel}

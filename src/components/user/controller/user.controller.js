@@ -1,5 +1,5 @@
 const user = require("../services/user.service");
-const { verifyTokenFromEmail } = require("../../../utils/jwt/jwt");
+const { verifyTokenFromEmail, isAdminOrModerator } = require("../../../utils/jwt/jwt");
 
 class User_controller {
     async verifyUser (req, res) {
@@ -21,16 +21,27 @@ class User_controller {
     async updateProfile (req, res) {
         try {
             const response = await user.updateUser(req);
-            return res.status(201).json({response});
+            return res.status(response.code).json(response.response);
         } catch (error) {
-            return await res.status(500).json({"response": `Error en actualizar perfil del usuario: ${error}`});
+            console.log("pasa por error")
+            console.log(`Error: ${error}`)
+            return await res.status(500).json({"response": `${error}`});
         }
     }
 
     async userToAdmin (req, res) {
         try {
             const response = await user.userToAdmin(req.body.email);
-            return res.status(201).json({response});
+            return res.status(response.code).json(response.response);
+        } catch (error) {
+            return await res.status(500).json({"response": `Error en dar de alta administrador: ${error}`});
+        }
+    }
+
+    async userToModerator (req, res) {
+        try {
+            const response = await user.userToModerator(req.body.email);
+            return res.status(response.code).json(response.response);
         } catch (error) {
             return await res.status(500).json({"response": `Error en dar de alta administrador: ${error}`});
         }
@@ -39,18 +50,38 @@ class User_controller {
     async forget_password (req, res) {
         try {
             const response = await user.forgetPassword(req.body.email);
-            return res.status(201).json({"response": `${response}`});
+            return res.status(response.code).json({"response": `${response.response}`});
         } catch (error) {
-            return await res.status(500).json({"response": `Error en olvidar contraseña: ${error}`});
+            return await res.status(500).json({"response": `${error}`});
         }
     }
 
     async recovery_password (req, res) {
         try {
             const response = await user.verification_forget_password(req.body.email, req.body.code, req.body.new_password);
-            res.status(200).json({"response": response});
+            res.status(response.code).json({response: response.response});
         } catch (error) {
-            return await res.status(500).json({"response": `Error en recuperar contraseña: ${error}`});
+            return await res.status(500).json({"response": `${error}`});
+        }
+    }
+
+    async getDataUser (req, res) {
+        try {
+            const token = req.headers.authorization.split(" ")[1];
+            const user_data = await verifyTokenFromEmail(token);
+            return res.status(200).json({user_data});
+        } catch (error) {
+            return await res.status(500).json({"response": `Error en obtener usuario: ${error}`})
+        }
+    }
+
+    async getRoleView (req, res) {
+        try {
+            const token = req.headers.authorization.split(" ")[1];
+            const roleView = await isAdminOrModerator(token);
+            return res.status(200).json(roleView);
+        } catch (error) {
+            return await res.status(500).json({"response": `${error}`})
         }
     }
 }

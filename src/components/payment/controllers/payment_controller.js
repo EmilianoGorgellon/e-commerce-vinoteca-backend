@@ -19,7 +19,7 @@ class Payment_controller {
             const payment_notification = await payment_service.create_notification();
             return payment_notification;
         } catch (error) {
-            pino.error(`Error en obtener link de pago: ${error}`);
+            pino.error(`Error en enviar notificacion de pago: ${error}`);
             return res.status(500).json({"response": `${error}`});
         }
     }

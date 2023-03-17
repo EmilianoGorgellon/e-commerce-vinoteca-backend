@@ -1,50 +1,49 @@
 const jwt = require("jsonwebtoken");    
 const {config} = require("../../config");
 const {usersModel} = require("../../models/schema/user");
+const {rolesModel} = require("../../models/schema/role");
+
 class JWT {
-    async generateToken (name, email, image, isAdmin) {
-        try {
-            return jwt.sign({name, email, image, isAdmin}, config.secret_jwt, {
+    async generateToken (_id, email) {
+        return jwt.sign({_id, email}, config.secret_jwt, {
                 expiresIn: 86400 // 1 day   
-            })
-        } catch (error) {
-            throw new Error(`Error no se pudo generar el token: ${error}`);
-        }
+        })
     }
-    
-    async verifyTokenAdmin(req, res, next) {
+
+    async generateTokenEmail (name, email, image, validateEmail) {
+        return jwt.sign({name, email, image, validateEmail}, config.secret_jwt, {
+            expiresIn: 86400 // 1 day   
+        })
+    }
+
+    async isAdminOrModerator (token) {
         try {
-            const token = req.headers.authorization.split(" ")[1];
+            const arrayRoles = [];
             const decoded = jwt.verify(token, config.secret_jwt);
-            const getUserByEmail = await usersModel.find({email: decoded.name.email})
-            if (getUserByEmail.length === 0) return res.status(403).json(`Error: No usuario encontrado`);
-            if (!decoded.name.isAdmin) return res.status(401).json(`Usuario no tiene acceso a esta accion`);
-            next(); 
+            const userFound = await usersModel.findById({_id: decoded._id});
+            const roles = await rolesModel.find({_id: {$in: userFound.roles}});  
+            for (let i = 0; i < roles.length; i++) {
+                if (roles[i].name === "admin" || roles[i].name === "moderator") {
+                    arrayRoles.push(roles[i].name);
+                }
+            }
+            return arrayRoles;
         } catch (error) {
-            return res.status(403).json(`Token no autorizado: ${error}`);
+            throw new Error(`${error}`);
         }
     }
 
     async verifyTokenFromEmail (token) {
         try {
             const decoded = jwt.verify(token, config.secret_jwt);
-            const getUserByEmail =  await usersModel.find({email: decoded.name.email})
+            const getUserByEmail =  await usersModel.find({email: decoded.email}, {password: 0, roles: 0})
             if (getUserByEmail.length === 0) throw new Error("Error: Usuario no encontrado");
             return getUserByEmail[0];
         } catch (error) {
-            throw new Error(`Token no autorizado: ${error}`);
+            throw new Error(`${error}`);
         }
     }
 
-    async isTokenReal (req, res, next) {
-        try {
-            const token = req.headers.authorization.split(" ")[1];
-            jwt.verify(token, config.secret_jwt);
-            next();
-        } catch (error) {
-            return res.status(403).json(`Token no autorizado: ${error}`);
-        }
-    }
 }
 
 

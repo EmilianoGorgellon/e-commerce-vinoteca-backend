@@ -11,8 +11,8 @@ const isCluster = false;
 class App {
     constructor() {
         this.app = express();
-        this.port = config.port;
         this.settings();
+        this.port = config.port;
         this.middlewares();
     }
     async settings(){

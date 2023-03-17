@@ -26,10 +26,10 @@ class Producto_controller {
                 images: req.files
             }
             const response = await producto.saveProduct(datas);
-            return await res.status(201).json(response);
+            return await res.status(response.code).json(response.response);
         } catch (error) {
             pino.error(`Error en guardar el producto: ${error}`);
-            return res.status(500).json({"response": `Error en guardar producto: ${error}`})
+            return res.status(500).json(error);
         }
     }
 
